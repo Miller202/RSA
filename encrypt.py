@@ -24,7 +24,7 @@ def MDC(a, b):#encontra o MDC entre e e phi
     return b    
 
 
-def verificaE(e, phi):
+def verificaE(e, phi):#verifica se o e dado é válido
 
     if (MDC(e, phi) == 1 and  e < phi):
          return True
@@ -72,8 +72,16 @@ def gerarChavePublica():#gera a chave publica (duh!)
         print("E informado não é válido")
 
 
+    #A chave publica é (e,n)
+    print ("\nSua chave pública é:  (", e, ",", n,")\n")
+    
+    #gera o arquivo com a chave publica
+    arquivo = open('Public_Key.txt','w')
+    arquivo.write("Sua chave pública é:  (" + str(e) + "," + str(n) + ")\n")
+ 
 
-def verificaPrimo(p):#Verifica se o numero é primo
+
+def verificaPrimo(p):#Verifica se o numero é primo pelo algoritmo de Euclides
 
     divs = 0
 
@@ -85,18 +93,19 @@ def verificaPrimo(p):#Verifica se o numero é primo
 
 
 
-#############inicio############
+################inicio##############
 
-os.system("clear") 
+
+os.system("clear") #se estiver usando Linux altere "cls" para "clear"
 
 #chama menu  e guarda a opção informada pelo usuário
 opção = 0
 
 while opção != 4:
+
+
     opção = menu()
 
-    #limpa a tela
-    #os.system("clear") 
     
     if opção == 1:
         gerarChavePublica()
@@ -112,12 +121,3 @@ while opção != 4:
     else:
         print("Opção inválida!")
 
-
-
-
-
-
-
-
-    
- 
