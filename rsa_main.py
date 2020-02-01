@@ -1,5 +1,7 @@
 import os
 
+alfabeto = ['A', 'B', 'C', 'D', 'E','F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ']
+
 def menu():
     print('''      >>>>>>MENU<<<<<<
     
@@ -46,7 +48,7 @@ def encriptar():
     for i in range(end):
         msg = text[i]
         #fórmula para criptografar a mensagem
-        crypt_msg += str((alfa.index(msg) ** e) % n)
+        crypt_msg += str((alfabeto.index(msg) ** e) % n)
         if(i+1 < end):
             crypt_msg += ',' 
             
