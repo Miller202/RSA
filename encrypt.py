@@ -33,8 +33,23 @@ def verificaE(e, phi):#verifica se o e dado é válido
         return False
 
 
-def encriptar():#em construção...
-    pass
+def encriptar():
+    path = input("Digite o diretório do arquivo que deseja criptografar: ")
+    read = open(path, "r")
+    read_msg = read_file.read()
+    
+    end = len(read_msg)
+    crypt_msg = ""
+    for i in range(end):
+        msg = read_msg[i]
+        #fórmula para criptografar a mensagem
+        crypt_msg += str((alfa.index(msg) ** e) % n)
+        if(i + 1 < end):
+            crypt_msg += ',' 
+            
+    crypt_file = open("EncryptFile.txt", "w")
+        crypt_file.write(crypt_msg)
+        crypt_file.close()
 
 
 
