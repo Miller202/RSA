@@ -35,7 +35,7 @@ def encriptar(text, e, n):
     for i in range(end):
         msg = text[i]
         # fórmula para criptografar a mensagem
-        crypt_msg += str(((alfabeto.index(msg) ** e) % n) + 2)
+        crypt_msg += str(((alfabeto.index(msg) ** e) % n))
         if (i + 1 < end):
             crypt_msg += ';'
 
@@ -56,7 +56,7 @@ def desencriptar(crypt_msg, d, n):  # em construção...
         i += 1
         aux = int(aux)
         # Fórmula de conversao dos caracteres criptados
-        decrypt_msg += alfabeto[((aux ** d) % n) - 2]
+        decrypt_msg += alfabeto[((aux ** d) % n)]
 
     decrypt_file = open("decrypt_file.txt", "w")
     decrypt_file.write(decrypt_msg)
@@ -130,7 +130,7 @@ def main():
             # lê um numero e
             e = int(input("Digite o e: "))
             # verifica se o e dado é válido
-            if (gcd(e, phi) == False):
+            while (gcd(e, phi) == False):
                 print("E invalido, o valor de E deve ser co-primo com o produto phi = (p-1)*(q-1)")
                 e = int(input("Digite o e: "))
 
@@ -149,6 +149,12 @@ def main():
             print('criptografado com sucesso')
 
         elif opcao == 3:
+
+            p = int(input("Digite o P: "))
+            q = int(input("Digite o Q: "))
+            e = int(input("Digite o e: "))
+
+            phi = int((p - 1) * (q - 1))
             n = p * q
             d = inverse(e, phi)
 
