@@ -32,7 +32,7 @@ def inverse(e, phi):
 def encriptar(text, e, n):
     end = len(text)
     crypt_msg = ""
-    for i in range(2, end):
+    for i in range(end):
         msg = text[i]
         # fórmula para criptografar a mensagem
         crypt_msg += str(((alfabeto.index(msg) ** e) % n) + 2)
