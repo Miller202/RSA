@@ -34,8 +34,8 @@ def encriptar(text, e, n):
     crypt_msg = ""
     for i in range(end):
         msg = text[i]
-        # fórmula para criptografar a mensagem
-        crypt_msg += str(((alfabeto.index(msg) ** e) % n))
+        index = alfabeto.index(msg)
+        crypt_msg += str((pow(index, e) % n))
         if (i + 1 < end):
             crypt_msg += ';'
 
@@ -55,8 +55,7 @@ def desencriptar(crypt_msg, d, n):  # em construção...
             i += 1
         i += 1
         aux = int(aux)
-        # Fórmula de conversao dos caracteres criptados
-        decrypt_msg += alfabeto[((aux ** d) % n)]
+        decrypt_msg += alfabeto[(pow(aux, d) % n)]
 
     decrypt_file = open("decrypt_file.txt", "w")
     decrypt_file.write(decrypt_msg)
@@ -163,6 +162,7 @@ def main():
             crypt_msg = file.read()
             file.close()
             desencriptar(crypt_msg, d, n)
+            print('descriptografado com sucesso')
 
         elif opcao == 4:
             break
