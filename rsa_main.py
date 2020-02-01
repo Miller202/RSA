@@ -1,161 +1,167 @@
 import os
 
-alfabeto = ['A', 'B', 'C', 'D', 'E','F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ']
-
-def menu():
-    print('''      >>>>>>MENU<<<<<<
-    
-    [1] Gerar Chave Pública
-    [2] Encriptar
-    [3] Desencriptar
-    [4] Sair do Programa
-        
-     ''')
-    opção = int(input(">>Informe a opção desejada: "))
-
-    return opção
+alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ']
 
 
-def MDC(a, b):#encontra o MDC entre e e phi
+def MDC(a, b):  # encontra o MDC entre e e phi
 
     while a % b != 0:
         aux = b
-        b = a % b 
+        b = a % b
         a = aux
 
-    return b    
+    return b
 
 
-def verificaE(e, phi):#verifica se o e dado é válido
+def gcd(e, phi):  # verifica se o e dado é válido
 
-    if (MDC(e, phi) == 1 and  e < phi):
-         return True
+    if (MDC(e, phi) == 1 and e < phi):
+        return True
 
     else:
         return False
 
-def inverse(e, phi) :
+
+def inverse(e, phi):
     d = 0
-    aux = int((d * e) % phi)
-    while(aux != 1):
+    while (int((d * e) % phi) != 1):
         d += 1
     return d
 
-def encriptar():
 
+def encriptar(text, e, n):
     end = len(text)
     crypt_msg = ""
-    for i in range(end):
+    for i in range(2, end):
         msg = text[i]
-        #fórmula para criptografar a mensagem
-        crypt_msg += str((alfabeto.index(msg) ** e) % n)
-        if(i+1 < end):
-            crypt_msg += ',' 
-            
+        # fórmula para criptografar a mensagem
+        crypt_msg += str(((alfabeto.index(msg) ** e) % n) + 2)
+        if (i + 1 < end):
+            crypt_msg += ';'
+
     crypt_file = open("encrypt_file.txt", "w")
     crypt_file.write(crypt_msg)
     crypt_file.close()
 
 
+def desencriptar(crypt_msg, d, n):  # em construção...
+    i = 0
+    end = len(crypt_msg)
+    decrypt_msg = ""
+    while i < end:
+        aux = ""
+        while i < end and crypt_msg[i] != ';':
+            aux += crypt_msg[i]
+            i += 1
+        i += 1
+        aux = int(aux)
+        # Fórmula de conversao dos caracteres criptados
+        decrypt_msg += alfabeto[((aux ** d) % n) - 2]
 
-def desencriptar():#em construção...
-    pass
+    decrypt_file = open("decrypt_file.txt", "w")
+    decrypt_file.write(decrypt_msg)
+    decrypt_file.close()
 
 
-def gerarChavePublica(e, n):#gera a chave publica (duh!)
-    
-    #A chave publica é (e,n)
-    print ("\nSua chave pública é:  (", e, ",", n,")\n")
+def gerarChavePublica(e, n):  # gera a chave publica (duh!)
 
-    #gera o arquivo com a chave publica
-    arquivo = open('public_key.txt','w')
-    arquivo.write("Sua chave pública é:  (" + str(e) + "," + str(n) + ")\n")
+    # A chave publica é (e,n)
+    print("\nSua chave publica:  (", e, ",", n, ")\n")
+
+    # gera o arquivo com a chave publica
+    arquivo = open('public_key.txt', 'w')
+    arquivo.write("Sua chave publica:  (" + str(e) + "," + str(n) + ")\n")
     arquivo.close()
- 
 
 
-def verificaPrimo(p):#Verifica se o numero é primo pelo algoritmo de Euclides
+def verificaPrimo(p):  # Verifica se o numero é primo pelo algoritmo de Euclides
 
     divs = 0
 
-    for i in range(1, p + 1 ):
+    for i in range(1, p + 1):
         if p % i == 0:
             divs += 1
 
     return (divs == 2)
 
 
-
 ################inicio##############
 
 
-os.system("clear") #se estiver usando Linux altere "cls" para "clear"
-
-#chama menu  e guarda a opção informada pelo usuário
-opção = 0
-
-while opção != 4:
-
-
-    opção = menu()
-
+def main():
     p = 0
     q = 0
     e = 0
     phi = 0
-    
-    if opção == 1:
-        #Lê um numero p 
-        p = int(input("Digite o P: "))
 
-        #verifica se o p dado é mesmo primo
-        if (verificaPrimo(p) == False):
-            print("P informado não é válido\n")
+    while (True):
 
-        #Lê um numero q 
-        q = int(input("Digite o Q: "))
+        print('''      >>>>>>RSA MENU<<<<<<
 
-        #verifica se o q dado é mesmo primo
-        if (verificaPrimo(q) == False or p == q):
-            print("Q informado não é válido")
+            [1] Gerar Chave Pública
+            [2] Encriptar
+            [3] Desencriptar
+            [4] Sair do Programa
 
-        #calcula n
-        n = p * q
+             ''')
+        opcao = int(input(">>Informe a opção desejada: "))
 
-        #calcula o phi
-        phi = (p - 1) * (q - 1)
+        if opcao == 1:
+            # Lê um numero p
+            p = int(input("Digite o P: "))
+            # verifica se o p dado é mesmo primo
+            while (verificaPrimo(p) == False):
+                print("P informado nao valido\n")
+                p = int(input("Digite o P: "))
 
-        #lê um numero e
-        e = int(input("Digite o e: "))
+            # Lê um numero q
+            q = int(input("Digite o Q: "))
+            # verifica se o q dado é mesmo primo
+            while (verificaPrimo(q) == False or p == q):
+                print("Q informado nao valido")
+                q = int(input("Digite o Q: "))
 
-        #verifica se o e dado é válido
-        if (verificaE(e, phi) == False):
-            print("E informado não é válido")
+            # calcula n
+            n = p * q
 
-        gerarChavePublica(e, n)
-        print ("\nChave pública gerada com sucesso")
+            # calcula o phi
+            phi = int((p - 1) * (q - 1))
 
-    elif opção == 2:
-        n = p * q
-        path = input("Digite o diretório do arquivo que deseja criptografar: ")
-        file = open(path, "r")
-        text = file.read()
-        encriptar(file, text, e, n)
-        file.close()
+            # lê um numero e
+            e = int(input("Digite o e: "))
+            # verifica se o e dado é válido
+            if (gcd(e, phi) == False):
+                print("E invalido, o valor de E deve ser co-primo com o produto phi = (p-1)*(q-1)")
+                e = int(input("Digite o e: "))
 
-    elif opção == 3:
-        n = p * q
-        phi = (p - 1) * (q - 1)
-        d = inverse(e, phi)
+            gerarChavePublica(e, n)
+            print("\nChave publica gerada com sucesso")
 
-        path = input("Digite o diretório do arquivo que deseja descriptografar:")
-        file = open(path, "r")
-        crypt_msg = file.read()
-        desencriptar(crypt_msg, d, n)
-        file.close()
+        elif opcao == 2:
+            n = p * q
+            phi = int((p - 1) * (q - 1))
 
-    elif opção == 4:
-        break
-    else:
-        print("Opção inválida!")
+            path = input("Digite o diretorio do arquivo que deseja criptografar: ")
+            file = open(path, "r")
+            text = file.read()
+            file.close()
+            encriptar(text, e, n)
+            print('criptografado com sucesso')
 
+        elif opcao == 3:
+            n = p * q
+            d = inverse(e, phi)
+
+            new_path = input("Digite o diretorio do arquivo que deseja descriptografar:")
+            file = open(new_path, "r")
+            crypt_msg = file.read()
+            file.close()
+            desencriptar(crypt_msg, d, n)
+
+        elif opcao == 4:
+            break
+        else:
+            print("Opçao invalida!")
+
+
+main()
