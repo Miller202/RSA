@@ -85,6 +85,16 @@ def verificaPrimo(p):  # Verifica se o numero é primo pelo algoritmo de Euclide
 
 ################inicio##############
 
+def head():
+    print("===========================================================================")
+    print("===============  ********     ********        ****        =================")
+    print("===============  ***    ***   **             **  **       =================")
+    print("===============  ***    ***   **            **    **      =================")
+    print("===============  ***    ***   ********     **      **     =================")
+    print("===============  ********           **    ************    =================")
+    print("===============  ***    **          **   **          **   =================")
+    print("===============  ***    **    ********  **            **  =================")
+    print("===========================================================================")
 
 def main():
     p = 0
@@ -94,7 +104,7 @@ def main():
 
     while (True):
 
-        print('''      >>>>>>RSA MENU<<<<<<
+        print('''               >>>>>>RSA MENU<<<<<<
 
             [1] Gerar Chave Pública
             [2] Encriptar
@@ -132,6 +142,9 @@ def main():
                 print("E invalido, o valor de E deve ser co-primo com o produto phi = (p-1)*(q-1)")
                 e = int(input("Digite o e: "))
 
+            file = open('private_key.txt', "w")
+            file.write("Sua chave privada:  (" + str(p) + "," + str(q) + "," + str(e) + ")\n")
+            file.close()
             gerarChavePublica(e, n)
             print("\nChave publica gerada com sucesso")
 
@@ -172,5 +185,5 @@ def main():
         else:
             print("Opçao invalida!")
 
-
+head()
 main()
