@@ -53,8 +53,8 @@ def desencriptar(crypt_msg, d, n):  # em construção...
             aux += crypt_msg[i]
             i += 1
         i += 1
-        aux = int(aux) - 2
-        decrypt_msg += alfabeto[(pow(aux, d, n))]
+        aux = int(aux)
+        decrypt_msg += alfabeto[(pow(aux, d, n)) - 2]
 
     decrypt_file = open("decrypt_file.txt", "w")
     decrypt_file.write(decrypt_msg)
@@ -141,7 +141,7 @@ def main():
 
             path = input("Digite o diretorio do arquivo que deseja criptografar: ")
             file = open(path, "r")
-            text = file.read()
+            text = file.read().upper()
             file.close()
             e = input("Digite o [e] da chave publica: ")
             n = input("Digite o [n] da chave publica: ")
