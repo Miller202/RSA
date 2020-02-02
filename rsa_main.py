@@ -1,6 +1,10 @@
 import os
 
-alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ']
+alfabeto = {'A' : 2, 'B' : 3, 'C' : 4, 'D' : 5, 'E' : 6,'F' : 7, 'G' : 8, 'H' : 9, 'I' : 10, 'J' : 11, 'K' : 12
+    , 'L' : 13, 'M' : 14, 'N' : 15, 'O' : 16, 'P' : 17, 'Q' : 18, 'R' : 19, 'S' : 20, 'T' : 21
+    , 'U' : 22, 'V' : 23, 'W' : 24, 'X' : 25, 'Y' : 26, 'Z' : 27, ' ' : 28}
+
+alfabeto_invertido = {v: k for k, v in alfabeto.items()}
 
 def MDC(a, b):  # encontra o MDC entre e e phi
 
@@ -33,7 +37,7 @@ def encriptar(text, e, n):
     crypt_msg = ""
     for i in range(end):
         msg = text[i]
-        index = alfabeto.index(msg) + 2
+        index = alfabeto[msg]
         crypt_msg += str((pow(index, e, n)))
         if (i + 1 < end):
             crypt_msg += ' '
@@ -54,7 +58,7 @@ def desencriptar(crypt_msg, d, n):  # em construção...
             i += 1
         i += 1
         aux = int(aux)
-        decrypt_msg += alfabeto[(pow(aux, d, n)) - 2]
+        decrypt_msg += alfabeto_invertido[(pow(aux, d, n))]
 
     decrypt_file = open("decrypt_file.txt", "w")
     decrypt_file.write(decrypt_msg)
