@@ -2,7 +2,6 @@ import os
 
 alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ']
 
-
 def MDC(a, b):  # encontra o MDC entre e e phi
 
     while a % b != 0:
@@ -34,10 +33,10 @@ def encriptar(text, e, n):
     crypt_msg = ""
     for i in range(end):
         msg = text[i]
-        index = alfabeto.index(msg)
-        crypt_msg += str((pow(index, e) % n))
+        index = alfabeto.index(msg) + 2
+        crypt_msg += str((pow(index, e, n)))
         if (i + 1 < end):
-            crypt_msg += ';'
+            crypt_msg += ' '
 
     crypt_file = open("encrypt_file.txt", "w")
     crypt_file.write(crypt_msg)
@@ -50,12 +49,12 @@ def desencriptar(crypt_msg, d, n):  # em construção...
     decrypt_msg = ""
     while i < end:
         aux = ""
-        while i < end and crypt_msg[i] != ';':
+        while i < end and crypt_msg[i] != ' ':
             aux += crypt_msg[i]
             i += 1
         i += 1
-        aux = int(aux)
-        decrypt_msg += alfabeto[(pow(aux, d) % n)]
+        aux = int(aux) - 2
+        decrypt_msg += alfabeto[(pow(aux, d, n))]
 
     decrypt_file = open("decrypt_file.txt", "w")
     decrypt_file.write(decrypt_msg)
@@ -144,14 +143,18 @@ def main():
             file = open(path, "r")
             text = file.read()
             file.close()
+            e = input("Digite o [e] da chave publica: ")
+            n = input("Digite o [n] da chave publica: ")
+            e = int(e)
+            n = int(n)
             encriptar(text, e, n)
             print('criptografado com sucesso')
 
         elif opcao == 3:
 
-            p = int(input("Digite o P: "))
-            q = int(input("Digite o Q: "))
-            e = int(input("Digite o e: "))
+            p = int(input("Digite o P da chave privada: "))
+            q = int(input("Digite o Q da chave privada: "))
+            e = int(input("Digite o e da chave privada: "))
 
             phi = int((p - 1) * (q - 1))
             n = p * q
