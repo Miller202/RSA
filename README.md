@@ -4,7 +4,7 @@
 
 ### Como executar o RSA-Encryptor
 
-**digite o seguinte comando no cmd:
+#### digite o seguinte comando no cmd:
 ```c
   python rsa_main.py
 ```
